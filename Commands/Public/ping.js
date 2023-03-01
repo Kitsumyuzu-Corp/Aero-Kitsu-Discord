@@ -1,15 +1,23 @@
-const { SlashCommandBuilder, CommandInteraction, EmbedBuilder } = require('discord.js');
+const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 
   data: new SlashCommandBuilder()
   .setName('ping')
-  .setDescription('Display client lantencies'),
+  .setDescription('Display how fast Aero Kitsu interact.'),
 
-  execute(interaction, client) {
+  /**
+   * 
+   * @param {CommandInteraction} interaction 
+   * @param {Client} client 
+   */
 
-    interaction.reply({ content: `:ping_pong: **Pong!**\n> WebSocket: \`${client.ws.ping} ms\`` });
+  async execute(interaction, client) {
+
+    const message = await interaction.deferReply({ fetchReply: true })
+
+    interaction.reply({ content: `:ping_pong: **Pong!**\n> API: \`${client.ws.ping} ms\`\nInternal: \`${ message.createdTimestamp - interaction.createdTimestamp } ms\`` });
   
-  }
+  },
 
-}
+};

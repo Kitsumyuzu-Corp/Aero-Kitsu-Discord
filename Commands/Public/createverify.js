@@ -1,45 +1,62 @@
-const { EmbedBuilder, ButtonStyle, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, CommandInteraction, PermissionFlagsBits } = require('discord.js');
+const { Client, CommandInteraction, SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 
 module.exports = {
+
   data: new SlashCommandBuilder()
   .setName('createverify')
-  .setDescription('Set verification channel in your server.')
+  .setDescription('Create a verification channel in your server')
+  
   .addChannelOption((option) =>
+
     option.setName('channel')
-    .setDescription('Send a verification embed into channel.')
+    .setDescription('Send verification messages into channel')
     .setRequired(true)
+
   )
-  .setDefaultMemberPermissions(PermissionFlagsBits.Manage_Channel),
+  .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
 
-  async execute(interaction) {
+  /**
+   * @param {CommandInteraction} interaction 
+   * @param {Client} client 
+   */
+  
+  async execute(interaction, client) {
 
-    const channel = interaction.options.getChannel('channel');
-    const verifyEmbed = new EmbedBuilder()
+    const verification_embed = new EmbedBuilder()
 
-    .setTitle('Welcome to World Govy Community')
-    .setURL('https://discord.gg/CyG7rH5xS5')
-    .setColor('#2c2f33')
-    .setDescription('```Hello discord users, welcome to our community server. Before you can start sending messages and communicate with the other member in our server. Please read the following rules and verify yourself as a humanoid. Thanks you```')
+    .setColor('#00ff00')
+    .setTitle(`:white_check_mark: ${interaction.guild.name}'s Verification`)
+    .setDescription(`\`\`\`Welcome to our community server, before you can start communicate with the other members. You will be needed to verify yourself as Humans by clicking verification button down below. Have a greate day!\`\`\``)
+    .setFooter('Invite your friends: https://discord.gg/CyG7rH5xS5')
 
-    let send_channel = channel.send({
-      embeds: ([verifyEmbed]),
+    const verification_channel = channel.send({
+
+      embeds: ([verification_embed]),
       components: [
-        new ActionRowBuilder().setComponents(
-          new ButtonBuilder().setCustomId('verify').setLabel('Verify').setStyle(ButtonStyle.Success),
+
+        new ActionRowBuilder()
+        .setComponents(
+          new ButtonBuilder()
+          .setStyle(ButtonStyle.Primary)
+          .setCustomId('verification')
+          .setEmoji(':white_check_mark:')
+          .setLabel('Verification'),
         ),
+        
       ],
+
     });
 
-    if (!send_channel) {
+    if (!verification_channel) {
 
-      return interaction.reply({ content: 'There was an error! Please try again later.', ephemeral: true });
-      
+      interaction.reply({ content: '> :exclamation: Oops! There was an error while sending this content. Please try again!', ephemeral: true });
+
     } else {
 
-      return interaction.reply({ content: 'Verification channel has successfully set!', ephemeral: true });
-      
+      interaction.reply({ content: '> :white_check_mark: Your verification system has been added & sended!', ephemeral: true })
+
     };
     
-  }
-  
-}
+  },
+
+};
