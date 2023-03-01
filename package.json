@@ -1,0 +1,21 @@
+{
+  "name": "aero-kitsu",
+  "version": "0.0.1",
+  "description": "Discord bot build with NodeJS & Discord.js Modules of v14",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "Kitsumyuzu#0430",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^18.0.6",
+    "ascii-table": "^0.0.9",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.2.6",
+    "util": "^0.12.5"
+  }
+}
